@@ -127,7 +127,9 @@ public class ContentFilesystem extends Filesystem {
         try {
         	if (cursor != null && cursor.moveToFirst()) {
         		size = resourceSizeForCursor(cursor);
-        		lastModified = lastModifiedDateForCursor(cursor);
+        		final Long lm = lastModifiedDateForCursor(cursor);
+        		if (lm != null)
+        			lastModified = lm.longValue();
         	} else {
                 // Some content providers don't support cursors at all!
                 CordovaResourceApi.OpenForReadResult offr = resourceApi.openForRead(nativeUri);
